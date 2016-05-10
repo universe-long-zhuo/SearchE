@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://localhost:3306/ibatis_db</value>
+		</property>
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value>root</value>
+		</property>
+		<property name="maxActive">
+			<value>10</value>
+		</property>
+		<property name="maxWait">
+			<value>30000</value>
+		</property>
+		<property name="maxIdle">
+			<value>1</value>
+		</property>
+		<property name="minIdle">
+			<value>1</value>
+		</property>
+	</bean>
+
+	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+	    <property name="configLocation"><value>/WEB-INF/sql-map-config.xml</value></property>
+	    <property name="dataSource"><ref bean="dataSource"/></property>
+	</bean>
+
+	<bean id="docDao2" class="com.beifeng.sooba.db.DocRecordDaoImpl">
+	    <property name="sqlMapClient"><ref local="sqlMapClient" /></property>
+	</bean>
+   
+   <bean id="fileIndexAction"  class="com.beifeng.sooba.action.FileIndexAction" scope="prototype" autowire="byName">
+
+   </bean>
+   
+   <bean id="pwat" class="com.beifeng.sooba.search.index.ParserWordAndToIndex" >
+   	   	<property name="docDao">
+   		<ref local="docDao2"/>
+   		</property>
+   </bean>
+  <bean id="pdfi" class="com.beifeng.sooba.search.index.PDFIndex" >
+   	   	<property name="docDao">
+   		<ref local="docDao2"/>
+   		</property>
+   </bean>
+   
+   <bean id="init" class="com.beifeng.sooba.search.index.InitIndex" >
+   	   	<property name="docDao">
+   		<ref local="docDao2"/>
+   		</property>
+   </bean>
+   
+    <bean id="adminDao" class="com.beifeng.sooba.db.admin.AdminDaoImpl">
+	    <property name="sqlMapClient"><ref local="sqlMapClient" /></property>
+	</bean>
+   
+  <bean id="loginAction" class="com.beifeng.sooba.action.LoginAction" >
+   	   	<property name="adminDao">
+   		<ref local="adminDao"/>
+   		</property>
+   </bean>
+   
+       <bean id="delDocAndRecord" class="com.beifeng.sooba.biz.DelDocumentAndRecord" >
+   	   	<property name="docDao">
+   		<ref local="docDao2"/>
+   		</property>
+       </bean>
+   
+    <bean id="doDeleteAction" class="com.beifeng.sooba.action.DoDeleteAction" >
+   	   	<property name="delDocAndRecord">
+   		<ref local="delDocAndRecord"/>
+   		</property>
+   </bean>
+   
+   
+</beans>

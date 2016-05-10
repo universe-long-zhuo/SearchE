@@ -1,0 +1,35 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+     <package name="com.beifeng.sooba.action" extends="struts-default">
+        <action name="SearchAction" class="com.beifeng.sooba.action.MainSearch">
+        	<result name="success">result.jsp</result>
+        </action>
+        
+        <action name="DeleteAction" class="com.beifeng.sooba.action.DeleteSearch">
+        	<result name="success">admin/result_list.jsp</result>
+        </action>
+        
+        
+        <action name="DoDeleteAction" class="doDeleteAction">
+        	<result name="success">admin/delSearch.jsp</result>
+        </action>
+        
+      
+         <action name="FileIndexAction" class="fileIndexAction">
+        	<result name="success">admin/fileindex.jsp</result>
+        </action> 
+        
+        <action name="LoginAction" class="loginAction">
+        	<result name="success">admin/delSearch.jsp</result>
+        	<result name="error">admin/login.jsp</result>
+        </action> 
+
+
+    </package>
+    
+    
+  
+    
+</struts>

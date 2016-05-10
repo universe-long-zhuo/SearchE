@@ -1,0 +1,6 @@
+drop table t_admin;
+CREATE TABLE t_admin (
+  id int(12) AUTO_INCREMENT PRIMARY key,
+  username varchar(20),
+  userpwd varchar(20)
+ )

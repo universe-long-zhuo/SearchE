@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap
+PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="docrecord">
+	<typeAlias alias="docRecordVO"
+		type="com.beifeng.sooba.db.DocRecord" />
+
+	<parameterMap class="docRecordVO" id="docRecordMp">
+		<parameter property="id" jdbcType="NUMBER" />
+		<parameter property="filename" jdbcType="VARCHAR" />
+		<parameter property="doctype" jdbcType="VARCHAR" />
+		<parameter property="lastmodify" jdbcType="NUMBER" />
+	</parameterMap>
+
+	<insert id="doccreate" parameterMap="docRecordMp">
+
+	   <selectKey resultClass="int" type="post" keyProperty="id" >   
+         <![CDATA[SELECT LAST_INSERT_ID() AS ID ]]>
+      </selectKey> 
+
+		insert into t_docrecord(id,filename,doctype,lastmodify) values
+		(?,?,?,?)</insert>
+   
+ 	<select id="getDocByName" parameterClass="java.lang.String"
+		resultClass="docRecordVO">
+		select * from t_docrecord where filename=#value#
+	</select>
+
+
+   <select id="getDocById" parameterClass="int"
+		resultClass="docRecordVO">
+		select * from t_docrecord where id=#value#
+   </select>
+   
+   <select id="getDocTop1" parameterClass="java.lang.String"
+		resultClass="docRecordVO">
+		select * from t_docrecord where doctype=#value# order by lastmodify desc limit 0,1
+   </select>
+      
+
+      <delete id="deleteDoc" parameterClass="int">
+    	DELETE FROM t_docrecord WHERE id=#value#
+    </delete>
+    <delete id="deleteAllDoc">
+    	DELETE FROM t_docrecord 
+    </delete>
+</sqlMap>
+

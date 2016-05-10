@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="sooba"
+  id="myeclipse.1254709721000"
+  context-root="/sooba"
+  j2ee-spec="5.0"
+  archive="sooba.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

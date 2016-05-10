@@ -1,0 +1,9 @@
+drop table t_docrecord;
+
+create table t_docrecord(
+id int(12) AUTO_INCREMENT PRIMARY key,
+filename varchar(200),
+doctype varchar(10),
+lastmodify  bigint(15)
+)
+
